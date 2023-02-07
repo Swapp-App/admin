@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\ShowQuestions;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +18,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware('auth')->group(function () {
+    Route::get(
+        '/dashboard',
+        function () {
+            return view('dashboard');
+        }
+    )->name('dashboard');
+
+    Route::get('questions/{new?}', ShowQuestions::class)
+        ->name('questions');
+});
+
+
+
+require __DIR__ . '/auth.php';
